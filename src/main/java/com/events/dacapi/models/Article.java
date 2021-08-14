@@ -3,8 +3,10 @@ package com.events.dacapi.models;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,13 +14,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private Long id;
 	
 	private int volumeOrder;
 	
@@ -45,18 +49,19 @@ public class Article implements Serializable {
 	
 	private int numberOfPages;
 	
-	@OneToMany(mappedBy="article")
+	@OneToMany(mappedBy="article", cascade = CascadeType.ALL)
 	@OrderBy("articleOrder")
 	private List<Author> authors;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Volume volume;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

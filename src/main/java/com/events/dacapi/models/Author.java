@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Author implements Serializable {
@@ -15,7 +18,7 @@ public class Author implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private Long id;
 	
 	private int articleOrder;
 	
@@ -43,14 +46,23 @@ public class Author implements Serializable {
 	@Column(length = 19)
 	private String orcID;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Article article;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
