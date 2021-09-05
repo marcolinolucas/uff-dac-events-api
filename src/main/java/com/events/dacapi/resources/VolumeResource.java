@@ -32,7 +32,7 @@ public class VolumeResource {
 
 	@GetMapping("")
 	public List<Volume> getVolumes() {
-		return volumeRepository.findAll();
+		return volumeRepository.findAllByOrderByInitialsAscStartDateAsc();
 	}
 
 	@GetMapping("{volumeId}")
@@ -76,7 +76,7 @@ public class VolumeResource {
 		if (!existVolume)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This volume not exist");
 
-		return articleRepository.findByVolumeId(volumeId);
+		return articleRepository.findByVolumeIdOrderByVolumeOrderAsc(volumeId);
 
 	}
 

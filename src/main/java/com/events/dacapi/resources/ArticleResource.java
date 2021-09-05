@@ -34,7 +34,7 @@ public class ArticleResource {
 		if (!existArticle)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This article not exist");
 
-		return authorRepository.findByArticleId(articleId);
+		return authorRepository.findByArticleIdOrderByArticleOrderAsc(articleId);
 	}
 
 	@GetMapping("{articleId}/authors/{authorId}")

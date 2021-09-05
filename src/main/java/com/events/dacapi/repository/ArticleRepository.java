@@ -8,4 +8,6 @@ import com.events.dacapi.models.Article;
 
 public interface ArticleRepository extends JpaRepository<Article ,Long> {
 	List<Article> findByVolumeId(long volumeId);
+	
+	List<Article> findByVolumeIdOrderByVolumeOrderAsc(long volumeId);
 }
