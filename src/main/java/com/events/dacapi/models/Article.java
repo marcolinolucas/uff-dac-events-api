@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Article implements Serializable {
@@ -49,7 +50,8 @@ public class Article implements Serializable {
 	
 	private int numberOfPages;
 	
-	@OneToMany(mappedBy="article", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="article", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	@OrderBy("articleOrder")
 	private List<Author> authors;
 
